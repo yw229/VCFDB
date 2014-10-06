@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<header class = "jumbotron subhead" id = "overview">
+<div class = "container">
+		<h1>{ {client.name }}</h1>
+	<p class = "lead"> is requesting access to your API account. </p>
+
+</div>
+
+<!-->
+</header>
+-->
+
+<div class = "container">
+
+<form action = "/dialog/authorize/decision" method = "post">
+  <input name="transaction_id" type="hidden" value="{{ transactionID }}">
+  <div>
+  <input  class="btn btn-primary btn-large" type="submit" value="Allow" id="allow">
+  <input  class="btn btn-primary btn-large" type="submit" value="Deny" name="cancel" id="deny">
+  </div>
+</form>
+
+</div>
+
+</head >
+
+{% endblock %}

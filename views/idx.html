@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=320, initial-scale=1, user-scalable=1"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="description" content="New York Genome Center (NYGC) is a non-profit organization that leverages collaborative resources to transform genomics, biomedical research, and clinical care."/>
+	<meta name="author" content="" />
+
+	<title>Sample Sheet Validator</title>
+
+	<link rel="stylesheet" type="text/css" href="http://www.nygenome.org/wp-content/themes/nygc/style.css?ver=1.0"/>
+	<link rel="stylesheet" type="text/css" href="http://www.nygenome.org/wp-content/plugins/nygc-colors/zone-colors.css?ver=1.0"/>
+
+	<link href="/common/css/bootstrap/bootstrap-glyphicons.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="skin.css">
+
+	<script src="/common/js/jquery/jquery-1.9.1.min.js"></script>
+	<script src="custom_formatters.js"></script>
+	<script src="/common/js/NYGC/DataTable.js"></script>
+</head>
+<body id="Home" class="zone-home">
+<div>
+
+
+
+<!-- BEGIN HEADER -->
+
+<header class="header just">
+<nav>
+	<a href="http://www.nygenome.org"><h1 class="logo">New York Genome Center</h1></a>
+</nav>
+<aside>
+<div class="btn-wrap">
+<h2>Sample Sheet Validator</h2>
+</div>
+</aside>
+</header>
+
+<!-- END HEADER -->	
+
+
+
+<!-- BEGIN HOME PAGE -->
+
+<section class="page">
+	<div class="content wysiwyg">
+
+
+	<div id="main-base">
+		<h2>Drag Sample Sheet Here</h2>
+	</div>
+
+	<div id="main-loader">
+	<p class="loader">
+		<i></i>
+	<p>
+	</div>
+
+	<div id="main-mezzanine">
+	<p>
+		<div class="btn-wrap yui-dt-just">
+			<a href="#" id="btn-revalidate" class="yui-dt-btn yui-green-color"><span class="glyphicon glyphicon-repeat"></span></a>
+			<a href="#" target="_blank" download="test.txt" id="btn-download" class="yui-dt-btn yui-blue-color" title="Option-click to save"><span class="glyphicon glyphicon-download"></span></a>
+			<a href="#" id="btn-close" class="yui-dt-btn yui-dark-blue-color"><span class="glyphicon glyphicon-remove"></span></a>
+		</div>
+		<div id="cellediting"></div>
+	</p>
+	</div>
+
+
+	</div>
+
+	<aside class="sidebar two-col">
+	<div class="content wysiwyg">
+
+
+	<div id="side-base">
+	<p>
+	This validator will parse your sample sheet to make sure that:
+	</p>
+	<ul>
+		<li>Only one distinct FCID appears</li>
+		<li>No two samples in a lane have the same index</li>
+		<li>Lane numbers are between 1 and 8</li>
+		<li>No illegal characters appear</li>
+		<li>Capture kit names are valid</li>
+		<li>Recipes are valid</li>
+		<li>Project names are valid</li>
+		<li>References are valid (N.B. Work In Progress)</li>
+	</ul>
+	<p>
+	Please do not use a sample sheet until it has been validated by this utility.
+	</p>
+	</div>
+
+
+	<div id="side-loader">
+	<p class="loader">
+		<i></i>
+	</p>
+	</div>
+
+
+	<div id="side-mezzanine">
+	<p id="result" class="center"></p>
+	<label for="errors">Errors</label>
+	<ul id="errors">
+	</ul>
+
+	<label for="warnings">Warnings</label>
+	<ul id="warnings">
+	</ul>
+	</div>
+
+
+	</div>
+	</aside>
+
+</section>
+
+<!-- END HOME PAGE -->
+
+
+
+<!-- BEGIN FOOTER -->
+		
+<footer class="footer">
+	<div class="lower just">
+		<p>&copy; 2013 New York Genome Center. All rights reserved.</p>
+		<aside>
+		</aside>
+	</div>
+</footer>
+
+<!-- END FOOTER -->
+
+
+
+
+<script type="text/javascript">
+
+var display_samplesheet = function(csv, laneOpts, idxOpts, controlOpts, recipeOpts, sampleOpts) {
+	var columnDefs = [
+		{"key": "FCID", "label": "FCID"}
+		,{"key": "Lane", "label": "Lane #", "editor": {"type": "dropdownTextEditor", "dropdownOptions": laneOpts}}
+		,{"key": "SampleID", "label": "Sample ID"}
+		,{"key": "SampleRef", "label": "Sample Reference"}
+		,{"key": "Index", "label": "Index", "formatter": barcodeFormatter, "editor": {"type": "dropdownTextEditor", "dropdownOptions": idxOpts}}
+		,{"key": "Description", "label": "Description"}
+		,{"key": "Control", "label": "Control", "editor": {"type": "dropdownTextEditor", "dropdownOptions": controlOpts}}
+		,{"key": "Recipe", "label": "Recipe", "editor": {"type": "dropdownTextEditor", "dropdownOptions": recipeOpts}}
+		,{"key": "Operator", "label": "Operator"}
+		,{"key": "SampleProject", "label": "Sample Project", "editor": {"type": "dropdownTextEditor", "dropdownOptions": sampleOpts}}
+	];
+
+	var table = DataTable.reader({data: csv, head: true});
+	table.render("#cellediting", {"columns": columnDefs});
+	$("#btn-download").click(function() {
+		var filename = "samplesheet.csv";
+		var text = table.toCSV();
+		$("#btn-download").attr('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		$("#btn-download").attr('download', filename);
+	});
+
+	$("#btn-revalidate").click(function() {
+		var text = table.toCSV();
+		console.log(text);
+		validate(text);
+	});
+
+	$("#btn-close").click(function() {
+		page_reset();
+	});
+
+	$("#main-loader").hide();
+	$("#main-mezzanine").show();
+};
+
+
+var validate = function(text) {
+	$("#side-base").hide();
+	$("#side-loader").show();
+
+	$("#warnings").empty();
+	$("#errors").empty();
+
+	$.ajax({
+		type		: "POST"
+		,url		: "/cgi-bin/LIMS/samplesheet_validator.py"
+		,data		: text
+		,error		: function(data, textStatus, error) {
+			alert(error);
+		}
+		,success        : function(data, textStatus, jqXHR) {
+			var fail = false;
+
+			for(var e in data["messages"]) {
+				if(data["messages"][e]["code"] == "WARNING") {
+					$('#warnings').append("<li>" + data["messages"][e]["message"] + "</li>");
+				}
+
+				if(data["messages"][e]["code"] == "ERROR") {
+					fail = true;
+					$('#errors').append("<li>" + data["messages"][e]["message"] + "</li>");
+				}
+			}
+
+			$('#side-loader').hide();
+			$('#side-mezzanine').show();
+
+			if(fail) {
+				$('#result').text("Sample Sheet Invalid!");
+				$("#result").removeClass("btn-result-valid");
+				$("#result").addClass("btn-result-invalid");
+				$("#errors").parent().show('slow');
+				$("#warnings").parent().show('slow');
+			}
+			else {
+				$('#result').text("Sample Sheet Valid");
+				$("#result").removeClass("btn-result-invalid");
+				$("#result").addClass("btn-result-valid");
+
+				$("#warnings").parent().show('slow');
+			}
+
+			display_samplesheet(text, data["data"]["valid_lanes"], data["data"]["valid_indices"], data["data"]["valid_control"], data["data"]["valid_recipes"], data["data"]["valid_projects"]);
+		}
+		,dataType	: "json"
+	});
+};
+
+var page_reset = function() {
+	$("#cellediting").empty();
+	$("#main-mezzanine").hide();
+	$("#main-loader").hide();
+	$("#main-base").show();
+
+	$("#warnings").empty();
+	$("#errors").empty();
+	$("#side-mezzanine").hide();
+	$("#side-loader").hide();
+	$("#side-base").show();
+};
+
+
+$(function() {
+
+$('.page').bind("dragover", function (e) {
+	e.originalEvent.dataTransfer.dropEffect = 'copy';
+	$("#main-base").html("<h2>Drop Sample Sheet Here</h2>");
+
+	return false;
+
+}).bind("dragleave", function (e) {
+	$("#main-base").html("<h2>Drag Sample Sheet Here</h2>");
+
+	return false;
+}).bind("drop", function (e) {
+	e.preventDefault();
+	$("#main-base").html("<h2>Drag Sample Sheet Here</h2>");
+
+
+	var files = e.originalEvent.dataTransfer.files;
+	var reader = new FileReader();
+	reader.onload = function(event) {
+		var pst = event.target.result.replace(/(\r\n|\n|\r)/gm, "\n");
+		validate(pst);
+	};
+
+	reader.readAsText(files[0],"UTF-8");
+	$("#main-base").hide();
+	$("#main-loader").show();
+
+	return false;
+});
+
+});
+
+</script>
+
+
+</div>
+</body>
+</html>

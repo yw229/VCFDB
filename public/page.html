@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"/>
+	<meta name="viewport" content="width=320, initial-scale=1, user-scalable=1"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="description" content="New York Genome Center (NYGC) is a non-profit organization that leverages collaborative resources to transform genomics, biomedical research, and clinical care."/>
+	<meta name="author" content="" />
+
+	<title>Table Demo</title>
+
+	<link rel="stylesheet" type="text/css" href="http://www.nygenome.org/wp-content/themes/nygc/style.css?ver=1.0"/>
+
+	<!--<link href="/common/css/bootstrap/bootstrap-glyphicons.css" rel="stylesheet" /> -->
+	<link href = "/stylesheets/bootstrap-glyphicons.css" rel = "stylesheet"/> 
+	<link rel="stylesheet" type="text/css" href="skin.css"> 
+
+	<!--<script src="/common/js/jquery/jquery-1.9.1.min.js"></script> -->
+	<script src = "/jquery/jquery-latest.js"></script> 
+	<!-- <script src="/common/js/NYGC/DataTable.js"></script>  -->
+	<script src="/DataTable.js"></script> 
+</head>
+<body id="Home" class="zone-home">
+<div>
+
+
+
+<!-- BEGIN HEADER -->
+
+<header class="header just">
+<nav>
+	<a href="http://www.nygenome.org"><h1 class="logo">New York Genome Center</h1></a>
+</nav>
+<aside>
+<div class="btn-wrap">
+<h2>Sample Sheet Validator</h2>
+</div>
+</aside>
+</header>
+
+<!-- END HEADER -->	
+
+
+
+<!-- BEGIN HOME PAGE -->
+
+<section class="page">
+	<div class="content wysiwyg">
+
+	<div id="tablemain">
+	</div>
+
+	</div>
+
+	<aside class="sidebar two-col">
+	<div class="content wysiwyg">
+
+	</div>
+	</aside>
+
+</section>
+
+<!-- END HOME PAGE -->
+
+
+
+<!-- BEGIN FOOTER -->
+		
+<footer class="footer">
+	<div class="lower just">
+		<p>&copy; 2013 New York Genome Center. All rights reserved.</p>
+		<aside>
+		</aside>
+	</div>
+</footer>
+
+<!-- END FOOTER -->
+
+
+
+
+<script type="text/javascript">
+
+
+
+
+$(function() {
+	var display_samplesheet = function(csv, laneOpts, idxOpts, controlOpts, recipeOpts, sampleOpts) {
+	var columnDefs = [
+		{"key": "ColumnA", "label": "Column A"}
+		,{"key": "ColumnB", "label": "Column B"}
+		,{"key": "ColumnC", "label": "Column C"}
+		,{"key": "ColumnD", "label": "Column D"}
+	];
+
+	var table = DataTable.reader({data: csv, head: true});
+	table.render("#tablemain", {"columns": columnDefs});
+};
+
+	var csv = [
+		{"ColumnA": 11, "ColumnB": 12, "ColumnC": 13, "ColumnD": 14}
+		,{"ColumnA": 21, "ColumnB": 22, "ColumnC": 23, "ColumnD": 24}
+		,{"ColumnA": 31, "ColumnB": 32, "ColumnC": 33, "ColumnD": 34}
+		,{"ColumnA": 41, "ColumnB": 42, "ColumnC": 43, "ColumnD": 44}
+	];
+
+	var csv = "ColumnA,ColumnB,ColumnC,ColumnD\n11,12,13,14\n21,22,23,24\n31,32,33,34\n41,42,43,44\n";
+
+	display_samplesheet(csv);
+
+	return false;
+});
+
+</script>
+
+
+</div>
+</body>
+</html>
+

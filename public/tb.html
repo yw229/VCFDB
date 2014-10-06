@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+   <!-- <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> --> 
+    <script type='text/javascript' src='jquery/jquery-latest.js'></script>  
+    <script type="text/javascript" src = "/tb.js"></script>
+
+    <script type = "text/javascript" >
+
+      //var pets = '{"pet":[{"name":"jack"},{"name":"john"},{"name":"joe"}]}';
+     var pet = '[ {"_id": "530f9e5895e4329c21a6f2a6","#chr": 1,"pos(1-coor)": 35138,"ref": "T","alt": "A" },{ "_id": "530f9e5895e4329c21a6f2a7","#chr": 1,"pos(1-coor)": 35138,"ref": "T","alt": "G" } ]';
+     // var pet = '[ {"name":"jack", "ref":"A"},{"name":"john"},{"name":"joe"}] ';
+     /* var pet = '[{"_id": "530f9e5895e4329c21a6f2a6", "#chr": 1 , "pos(1-coor)": 35138, "ref":"A","alt": "A"},                                      {"_id": "530f9e5895e4329c21a6f2a7", "#chr": 1 , "pos(1-coor)": 35138, "ref":"T" , "alt": "G"}]'; */
+
+      var arr = JSON.parse(pet);
+      alert(arr[1].alt);
+
+    </script>
+    
+  </head>
+
+  <body>
+    <div id='table_div'></div>
+  </body>
+</html>

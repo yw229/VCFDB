@@ -1,0 +1,174 @@
+
+
+#main-loader {
+	display: none;
+}
+
+#main-mezzanine {
+	display: none;
+}
+
+#side-loader {
+        display: none;
+}
+
+#side-mezzanine {
+        display: none;
+}
+
+
+
+.btn-result-valid {
+    height: 36px;
+    padding: auto;
+    background: #47c080;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.btn-result-invalid {
+    height: 36px;
+    padding: auto;
+    background: #c92a39;
+    vertical-align: middle;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+.yui-dt-btn {
+    display: inline-block;
+    height: 36px;
+    line-height: 36px;
+    padding: 0 36px;
+    cursor: pointer;
+    margin: 0 auto;
+    background: rgba(0, 0, 0, .65);
+    color: #fff;
+    font-weight: 600;
+    font-size: 12px
+}
+
+.yui-highlight-color {
+    background: #f6643a;
+}
+
+.yui-red-color {
+    background: #c92a39;
+}
+
+.yui-light-blue-color {
+    background: #71bce3;
+}
+
+.yui-blue-color {
+    background: #3071af;
+}
+
+.yui-dark-blue-color {
+    background: #033158;
+}
+
+.yui-green-color {
+    background: #47c080;
+}
+
+
+.yui-dt-just {
+    text-align: right;
+}
+
+
+
+.yui-dt-editor, .yui-dt-editor-shim {
+    position: absolute;
+    margin: 0;
+    z-index: 9000
+}
+
+.yui-dt-editor {
+    text-align: left;
+    background-color: #f2f2f2;
+    border: 1px solid #808080;
+    padding: 6px
+}
+
+.yui-dt-editor label {
+    padding-left: 4px;
+    padding-right: 6px
+}
+
+
+.yui-dt table {
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+    width: 100%;
+    font-size: 12px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.yui-dt thead {
+    border-spacing: 0
+}
+
+.yui-dt thead tr {
+    font-weight: bold;
+    text-decoration: none;
+    background : #3071af;
+    color: #fff;
+    vertical-align: bottom
+}
+
+.yui-dt thead tr {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.yui-dt thead tr {
+    white-space: nowrap
+}
+
+
+.yui-dt td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    text-align: left
+}
+
+.yui-dt-list td {
+    border-right: 0
+}
+
+tbody .yui-dt-editable {
+    cursor: pointer
+}
+
+tr.yui-dt-even {
+    background-color: #FFF
+}
+
+tr.yui-dt-odd {
+    background-color: #71bce3
+}
+
+
+td.yui-dt-highlighted {    
+    cursor: pointer;
+    background-color: #f6643a;
+}
+
+tr.yui-dt-highlighted {
+    cursor: pointer;
+    background-color: #f6643a;
+}
+
+

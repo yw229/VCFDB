@@ -1,0 +1,21 @@
+div#container {
+        margin: 0 auto;
+        padding: 2px;
+        background: #FFF
+    }
+
+    div#containerFilterControl {
+        border: 1px solid gray;
+    }
+
+    table#visualizationsContainer {
+        padding: 3px;
+        margin: 1em auto;
+        width: 90%;
+        border: 1px solid gray;
+    }
+
+    h2 {
+        font: lighter 150% "Trebuchet MS", Arial sans-serif;
+        color: #9E4A24
+    }

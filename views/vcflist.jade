@@ -1,0 +1,13 @@
+extends layout
+
+block content 
+	h1.
+		VCF List 
+	ul
+		each record, i in vcflist
+			li
+				a(href="#{ record[#chr]}" )= record[#chr]
+			
+				a(href="#{ record.ref}" ) = record.ref 
+
+				a(href="#{ record[pos(1-coor)] }") = record[ pos(1-coor) ] 
